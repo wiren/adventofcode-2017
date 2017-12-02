@@ -7,23 +7,17 @@ fs.readFile('input', 'utf8', function(err, data) {
     return console.log(err);
   }
 
-  solve(data);
+  solve(data.split('\n').filter(s => s != ''));
 });
 
-function combinations(row) {
-  return row.reduce((acc, v, ix) =>
-      acc.concat(row.slice(ix + 1).map(x => [ [v, x], [x, v] ]))
-    , [])
-    .reduce((a, b) => a.concat(b));
-}
-
 function solve(input) {
-  var res = input.split('\n')
-    .filter(s => s != '')
-    .map(s => s.split(/[ \t]+/))
-    .map(row => combinations(row))
-    .map(arr => arr.filter(pair => pair[0] % pair[1] == 0).map(p => p[0] / p[1]))
-    .reduce((sum, x) => sum + x[0], 0);
+  const res = input.map(s => s.split(/[ \t]+/))
+    .map(row => row.reduce((acc, v, ix) =>
+        acc.concat(row.slice(ix + 1).map(x => [[v, x], [x, v]])), [])
+      .reduce((a, b) => a.concat(b))
+      .filter(p => p[0] % p[1] == 0)
+      .map(p => p[0] / p[1])[0])
+    .reduce((sum, x) => sum + x, 0);
 
   console.log(res);
 }
