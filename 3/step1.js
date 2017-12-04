@@ -1,45 +1,28 @@
 "use strict";
 
-// Run with "node --harmony step1.js" to enable tail call optimization
-
-function arrEq(a, b) {
-  return a[0] == b[0] && a[1] == b[1];
-}
+const dirs = [[1, 0], [0, 1], [-1, 0], [0, -1]];
 
 function arrAdd(a, b) {
   return [a[0] + b[0], a[1] + b[1]];
 }
 
-function changeDir(dir) {
-  if (arrEq(dir, [1, 0])) return [0, 1];
-  if (arrEq(dir, [0, 1])) return [-1, 0];
-  if (arrEq(dir, [-1, 0])) return [0, -1];
-  return [1, 0];
+function newDir(pos, dir) {
+  return Math.abs(pos[0]) == Math.abs(pos[1]) + (dir == 0 ? 1 : 0) ? (dir + 1) % 4 : dir;
 }
 
-function timeToChangeDir(posDir) {
-  const nextPos = arrAdd(posDir[0], posDir[1]);
-  return (arrEq(posDir[1], [1, 0]) && nextPos[0] - 1 > -nextPos[1])
-    || (arrEq(posDir[1], [0, 1]) && nextPos[1] > nextPos[0])
-    || (arrEq(posDir[1], [-1, 0]) && -nextPos[0] > nextPos[1])
-    || (arrEq(posDir[1], [0, -1]) && -nextPos[1] > -nextPos[0]);
+function nextState(state) {
+  const dir = newDir(state.pos, state.dir);
+  return { pos: arrAdd(state.pos, dirs[dir]), dir: dir };
 }
 
-function nextPosDir(posDir) {
-  const dir = timeToChangeDir(posDir) ? changeDir(posDir[1]) : posDir[1];
-  return [arrAdd(posDir[0], dir), dir];
-}
+function solve(n) {
+  var state = { pos: [0, 0], dir: 0 };
+  for (var i = 1; i < n; i++) {
+    state = nextState(state);
+  }
 
-function step(i, posDir, stopAt) {
-  if (i >= stopAt) return posDir;
-
-  return step(i + 1, nextPosDir(posDir), stopAt);
-}
-
-function solve(input) {
-  const endPos = step(1, [[0, 0], [1, 0]], input);
-  const res = Math.abs(endPos[0][0]) + Math.abs(endPos[0][1]);
-  console.log("Manhattan distance for square " + input + " is " + res);
+  const res = Math.abs(state.pos[0]) + Math.abs(state.pos[1]);
+  console.log("Manhattan distance for square " + n + " is " + res);
 }
 
 solve(1);
