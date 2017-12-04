@@ -12,7 +12,7 @@ fs.readFile('input', 'utf8', function(err, data) {
 
 function isValid(pwd) {
   return pwd.split(' ').reduce((eq, w, ix, arr) =>
-    eq + arr.slice(ix + 1).reduce((nrEq, w2) => nrEq + (w == w2 ? 1 : 0), 0)
+    eq + arr.slice(ix + 1).reduce((nrEq, w2) => nrEq + (w == w2), 0)
   , 0) == 0;
 }
 
