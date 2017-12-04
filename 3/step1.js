@@ -2,26 +2,21 @@
 
 const dirs = [[1, 0], [0, 1], [-1, 0], [0, -1]];
 
-function arrAdd(a, b) {
-  return [a[0] + b[0], a[1] + b[1]];
+function move(s, dir) {
+  return { x: s.x + dirs[dir][0], y: s.y + dirs[dir][1], dir: dir };
 }
 
-function newDir(pos, dir) {
-  return Math.abs(pos[0]) == Math.abs(pos[1]) + (dir == 0 ? 1 : 0) ? (dir + 1) % 4 : dir;
-}
-
-function nextState(state) {
-  const dir = newDir(state.pos, state.dir);
-  return { pos: arrAdd(state.pos, dirs[dir]), dir: dir };
+function nextDir(s) {
+  return Math.abs(s.x) == Math.abs(s.y) + (s.dir == 0 ? 1 : 0) ? (s.dir + 1) % 4 : s.dir;
 }
 
 function solve(n) {
-  var state = { pos: [0, 0], dir: 0 };
+  var state = { x: 0, y: 0, dir: 0 };
   for (var i = 1; i < n; i++) {
-    state = nextState(state);
+    state = move(state, nextDir(state));
   }
 
-  const res = Math.abs(state.pos[0]) + Math.abs(state.pos[1]);
+  const res = Math.abs(state.x) + Math.abs(state.y);
   console.log("Manhattan distance for square " + n + " is " + res);
 }
 
