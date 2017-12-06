@@ -10,7 +10,6 @@ function step(n, ix, inst) {
 }
 
 function solve(data) {
-  console.log(data);
   const res = step(0, 0, data);
   console.log("It takes " + res + " steps to escape the maze");
 }
