@@ -1,16 +1,8 @@
 "use strict";
 
-// run with node --harmony step2.js
+// run with "node --harmony step2.js" to enable tail recursion
 
-var fs = require('fs');
-
-fs.readFile('input', 'utf8', function(err, data) {
-  if (err) {
-    return console.log(err);
-  }
-
-  solve(data.split('\n').filter(x => x != '').map(x => Number(x)));
-});
+var fsx = require('../util/fsx');
 
 function step(n, ix, inst) {
   if (ix >= inst.length) return n;
@@ -25,3 +17,4 @@ function solve(data) {
 }
 
 solve([0, 3, 0, 1, -3]);
+fsx.processLines('input', inst => solve(inst.map(x => Number(x))));

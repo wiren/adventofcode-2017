@@ -2,15 +2,7 @@
 
 // run with node --harmony step1.js
 
-var fs = require('fs');
-
-fs.readFile('input', 'utf8', function(err, data) {
-  if (err) {
-    return console.log(err);
-  }
-
-  solve(data.split('\n').filter(x => x != ''));
-});
+var fsx = require('../util/fsx');
 
 function step(n, ix, inst) {
   if (ix >= inst.length) return n;
@@ -18,8 +10,10 @@ function step(n, ix, inst) {
 }
 
 function solve(data) {
+  console.log(data);
   const res = step(0, 0, data);
   console.log("It takes " + res + " steps to escape the maze");
 }
 
 solve([0, 3, 0, 1, -3]);
+fsx.processLines('input', solve);
