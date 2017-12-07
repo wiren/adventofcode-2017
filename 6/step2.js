@@ -1,4 +1,4 @@
-// run with node --harmony step1.js
+// run with node --harmony step2.js
 "use strict";
 
 var fsx = require('../util/fsx');
