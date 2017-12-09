@@ -1,7 +1,5 @@
 "use strict";
 
-// run with node --harmony step1.js
-
 var fs = require('fs');
 
 exports.processFile = function(file, fn) {
