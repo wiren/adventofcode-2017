@@ -37,7 +37,7 @@ function solve(len, input) {
     step(str, x, ix, n);
     ix = (ix + x + n) % str.length;
   }
-  // console.log("res", str);
+
   console.log(str[0] * str[1]);
 }
 
