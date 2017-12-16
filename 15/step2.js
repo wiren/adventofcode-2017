@@ -11,13 +11,12 @@ function* generator(factor, start, mult) {
 
 const mask = 65535;
 function solve(pair) {
-  var a = generator(16807, pair[0], 4);
-  var b = generator(48271, pair[1], 8);
+  var gens = [generator(16807, pair[0], 4), generator(48271, pair[1], 8)];
 
   var same = 0;
   for (var i = 0; i < 5000000; i++) {
-    var aval = a.next().value & mask;
-    var bval = b.next().value & mask;
+    var aval = gens[0].next().value & mask;
+    var bval = gens[1].next().value & mask;
     if (aval === bval) {
       same++;
     }
